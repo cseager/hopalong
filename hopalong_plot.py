@@ -11,6 +11,7 @@ import images2gif  #http://code.google.com/p/visvis/source/browse/#hg/vvmovie
 
 NUMPOINTS = 10000 # number of points in each hopalong attractor plot frame
 # this is for individual point colors in the charts
+# TODO: allow user to specify color scheme
 COLORS = np.linspace(0, 1, NUMPOINTS) 
 axislim = [-10, 10] # boundaries of the chart
 
