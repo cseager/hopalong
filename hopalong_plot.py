@@ -2,6 +2,7 @@
 # Filename: hopalong_plot.py
 
 import os, sys
+import argparse
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
@@ -34,9 +35,14 @@ def axtext(axX, abc, y, abcstr):
     else:
         axX.text(abc - 0.035*len(str(abc)) - 0.15, y, str(abc) + " = " + abcstr)
 
-
+def get_legend_limits(l):
+    default = [-1, 1]
+    limits = [np.min(l), np.max(l)]
+    z = zip(default, limits)
+    return [min(z[0]), max(z[1])]
+    
 # outputs a single frame of a hopalong animation to the current directory
-def hopalong_iteration(a, b, c, i):
+def hopalong_iteration(a, b, c, i, args):
     p = hopalong(a, b, c, NUMPOINTS)
     fig, ax = plt.subplots()
     ax.scatter(p[0], p[1], c=COLORS, s=1, edgecolors='none')
@@ -45,7 +51,8 @@ def hopalong_iteration(a, b, c, i):
     divider = make_axes_locatable(ax)
     axX = divider.append_axes("top", 0.5, 0.5, True)
     axX.scatter([a,b,c], [0,1,2], c='.75', s=5000, marker='|', linewidths=3)
-    axX.set_xlim([-1, 1])
+    # TODO: after updating arg parsing for a and b, account for them in the limits here
+    axX.set_xlim([args.cmin, args.cmax])
     axX.set_ylim([-0.8, 2.8])
     axtext(axX, a, -0.4, "a")
     axtext(axX, b, 0.6, "b")
@@ -56,27 +63,51 @@ def hopalong_iteration(a, b, c, i):
     fig.savefig(name)
 
 def run_hopalong(argv):
-	# number of frames in animation
-	if len(argv) == 2:
-		n = int(argv[1])
-	else:
-		n = 10
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-f", "--frames", dest='frames', 
+                        type=int, default=10,
+                        help="number of frames to save")
 
-	# TODO: expand functionality to vary a and b as well
-	# a, b, c are the parameters to vary the hopalong attractor graph in each frame
-	# aa, bb, cc are arrays of floats between -1 and 1, one element for each frame
-	aa, bb, cc = 0.5*np.ones(n), -0.6*np.ones(n), np.linspace(0, 0.9, n)
+    # TODO: change this group to one argument that can take 1-2 values.
+    #       write custom action class to implement logic. 
+    #       see http://docs.python.org/2/library/argparse.html#action
+    parser.add_argument("-c", dest='c_magnitude', type=float, 
+                        default=.5, help="value of c if c is constant")
+    parser.add_argument("--cmax", dest='cmax', type=float, 
+                        default=0.9, help="max value of c")
+    parser.add_argument("--cmin", dest='cmin', type=float, 
+                        default=0.0, help="min value of c")
 
-	# animated set of charts
-	for i in range(n):
-		hopalong_iteration(aa[i], bb[i], cc[i], i)
+    args = parser.parse_args()
 
-	f = sorted([i for i in os.listdir('.') if '.png' in i])
-	images = [PIL.Image.open(i) for i in f]
-	tofile = "hopalongs.gif"
-	images2gif.writeGif(tofile, images, duration=.2)
+    # number of frames in animation
+    n = args.frames
+    c_magnitude = args.c_magnitude
+    a_magnitude = 0.5
+    b_magnitude = -0.6
+    cmax = args.cmax
+    cmin = args.cmin
+    
+    # a, b, c are the parameters to vary the hopalong attractor graph in each frame
+    # aa, bb, cc are arrays of floats between -1 and 1, one element for each frame
+    # TODO: expand arg parsing to set a and b - currently they're constant
+    aa = a_magnitude*np.ones(n)
+    bb = b_magnitude*np.ones(n)
+    
+    #TODO: allow holding constant with np.ones as soon as arg parsing for a, b is added
+    cc = np.linspace(cmin, cmax, n)
+
+    # save the frames in the current directory
+    for i in range(n):
+        hopalong_iteration(aa[i], bb[i], cc[i], i, args)
+
+    # convert the png frames into animated gif
+    f = sorted([i for i in os.listdir('.') if '.png' in i])
+    images = [PIL.Image.open(i) for i in f]
+    tofile = "hopalongs.gif"
+    images2gif.writeGif(tofile, images, duration=.2)
 
 
 if __name__ == '__main__':
-	run_hopalong(sys.argv)
+    run_hopalong(sys.argv)
 
