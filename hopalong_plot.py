@@ -16,6 +16,14 @@ NUMPOINTS = 10000 # number of points in each hopalong attractor plot frame
 COLORS = np.linspace(0, 1, NUMPOINTS) 
 axislim = [-10, 10] # boundaries of the chart
 
+# TODO: rewrite this as a class
+# hopalong()            -> Hopalong.get_points()
+# hopalong_iteration()  -> Hopalong.get_plot()
+# save plot             -> Hopalong.savefig(name) in main loop
+# boundaries from args  -> Hopalong object data members
+# color scheme          -> Hopalong object data members
+
+
 # hopalong attractor algorithm
 # http://www.fraktalwelt.de/myhome/simpiter2.htm
 def hopalong(a, b, c, n=1000):
