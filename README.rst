@@ -4,13 +4,16 @@ hopalong_plot.py
 This program creates a gif animation of the hopalong attractor. 
 
 Inputs
-------
+~~~~~~
 
-One integer command line argument specifies the number of frames. 
-With 0 command line arguments, the default number of frames is 10. 
+Command line arguments: ::
+
+    -f, --frames          integer, number of frames to save
+    --cmax CMAX           max value of c
+    --cmin CMIN           min value of c
 
 Outputs
-------- 
+~~~~~~~
 
 10 (or specified number of frames) png files titled hop000.png 
 and one animated gif file titled hopalongs.gif

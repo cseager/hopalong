@@ -79,8 +79,6 @@ def run_hopalong(argv):
     # TODO: change this group to one argument that can take 1-2 values.
     #       write custom action class to implement logic. 
     #       see http://docs.python.org/2/library/argparse.html#action
-    parser.add_argument("-c", dest='c_magnitude', type=float, 
-                        default=.5, help="value of c if c is constant")
     parser.add_argument("--cmax", dest='cmax', type=float, 
                         default=0.9, help="max value of c")
     parser.add_argument("--cmin", dest='cmin', type=float, 
@@ -90,7 +88,6 @@ def run_hopalong(argv):
 
     # number of frames in animation
     n = args.frames
-    c_magnitude = args.c_magnitude
     a_magnitude = 0.5
     b_magnitude = -0.6
     cmax = args.cmax
