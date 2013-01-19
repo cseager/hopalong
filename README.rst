@@ -27,5 +27,9 @@ http://www.fraktalwelt.de/myhome/simpiter2.htm
 Sample Output
 -------------
 
+To produce output: ::
+
+    $ python hopalong_plot.py -f 91
+
 .. image:: https://raw.github.com/cseager/hopalong/master/example_output.gif
     :alt: example animated gif

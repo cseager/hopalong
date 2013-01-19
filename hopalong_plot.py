@@ -60,7 +60,7 @@ def hopalong_iteration(a, b, c, i, args):
     axX = divider.append_axes("top", 0.5, 0.5, True)
     axX.scatter([a,b,c], [0,1,2], c='.75', s=5000, marker='|', linewidths=3)
     # TODO: after updating arg parsing for a and b, account for them in the limits here
-    axX.set_xlim([args.cmin, args.cmax])
+    axX.set_xlim([-1, 1])
     axX.set_ylim([-0.8, 2.8])
     axtext(axX, a, -0.4, "a")
     axtext(axX, b, 0.6, "b")
