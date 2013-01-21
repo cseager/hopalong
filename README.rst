@@ -41,11 +41,11 @@ Sample output: ::
 .. image:: https://raw.github.com/cseager/hopalong/master/example_output.gif
     :alt: example animated gif
 
-The following example with args has 13 frames, value of ``a`` constant at 1, 
-range of ``b`` from -1.9 to 0, range of ``c`` from 1.9 to 0.8, and uses the 
+The following example with args has 13 frames, holds ``a`` constant at -1.0, 
+range of ``b`` from -1.9 to 0.0, range of ``c`` from 1.5 to 0.3, and uses the 
 matplotlib color map ``winter``: ::
 
-    $ python hopalong_plot.py -f 13 -a -1 -b -1.9 0 -c 1.9 .8 -cmap winter
+    $ python hopalong_plot.py -f 13 -a -1 -b -1.9 0 -c 1.5 .3 -cmap winter
     
 .. image:: https://raw.github.com/cseager/hopalong/master/example2.gif
     :alt: example animated gif
