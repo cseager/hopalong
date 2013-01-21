@@ -22,8 +22,10 @@ Inputs
 Command line arguments: ::
 
     -f, --frames          integer, number of frames to save
-    --cmax CMAX           max value of c
-    --cmin CMIN           min value of c
+    -cmap                 color map for the plot
+    -a                    magnitude or range of a
+    -b                    magnitude or range of b
+    -c                    magnitude or range of c
 
 Outputs
 ~~~~~~~
@@ -38,3 +40,13 @@ Sample output: ::
 
 .. image:: https://raw.github.com/cseager/hopalong/master/example_output.gif
     :alt: example animated gif
+
+The following example with args has 13 frames, value of ``a`` constant at 1, 
+range of ``b`` from -1.9 to 0, range of ``c`` from 1.9 to 0.8, and uses the 
+matplotlib color map ``winter``: ::
+
+    $ python hopalong_plot.py -f 13 -a -1 -b -1.9 0 -c 1.9 .8 -cmap winter
+    
+.. image:: https://raw.github.com/cseager/hopalong/master/example2.gif
+    :alt: example animated gif
+
