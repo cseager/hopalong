@@ -26,6 +26,7 @@ Command line arguments: ::
     -a                    magnitude or range of a
     -b                    magnitude or range of b
     -c                    magnitude or range of c
+    -axisbg               background color for the plot
 
 Outputs
 ~~~~~~~
@@ -45,7 +46,7 @@ The following example with args has 13 frames, holds ``a`` constant at -1.0,
 range of ``b`` from -1.9 to 0.0, range of ``c`` from 1.5 to 0.3, and uses the 
 matplotlib color map ``winter``: ::
 
-    $ python hopalong_plot.py -f 13 -a -1 -b -1.9 0 -c 1.5 .3 -cmap winter
+    $ python hopalong_plot.py -f 13 -b -1.9 -.05 -c 1.5 .3 -cmap winter -axisbg white
     
 .. image:: https://raw.github.com/cseager/hopalong/master/example2.gif
     :alt: example animated gif

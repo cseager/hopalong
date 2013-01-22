@@ -20,14 +20,15 @@ class Hopalong():
         self.frames = frames
         self.min = np.min(self.abc)
         self.max = np.max(self.abc)
-        self.set_cmap('jet')
+        self.set_cmap()
+        self.set_axisbg()
         
-    def set_cmap(self, cmap):
-        try:
-            self.COLORS = plt.get_cmap(cmap)(np.linspace(0, 1, NUMPOINTS))
-        except:
-            self.COLORS = plt.get_cmap('jet')(np.linspace(0, 1, NUMPOINTS))        
-        
+    def set_cmap(self, cmap='jet'):
+        self.COLORS = plt.get_cmap(cmap)(np.linspace(0, 1, NUMPOINTS))
+    
+    def set_axisbg(self, axisbg='white'):
+        self.axisbg = axisbg
+
     # hopalong attractor algorithm
     # http://www.fraktalwelt.de/myhome/simpiter2.htm
     def get_points(self, i, num_points):
@@ -60,7 +61,8 @@ class Hopalong():
     def get_plot(self, i):
         points = self.get_points(i, NUMPOINTS)
         a, b, c = self.abc[i]
-        fig, ax = plt.subplots()
+        fig = plt.figure()
+        ax = fig.add_subplot(111, axisbg=self.axisbg)
         ax.scatter(points[0], points[1], c=self.COLORS, s=1, edgecolors='none')
         ax.set_xlim(axislim)
         ax.set_ylim(axislim)
@@ -97,8 +99,9 @@ def run_hopalong(argv):
     parser.add_argument("-f", "--frames", dest='frames', 
                         type=int, default=10,
                         help="number of frames to save")
-    parser.add_argument("-cmap", dest='cmap', default='bone',
+    parser.add_argument("-cmap", dest='cmap', default='Paired',
                         help="color map for the plot")
+    parser.add_argument("-axisbg", default="black", help="background color for the plot")
 
     # TODO: change this group to arguments that can take 1-2 values.
     #       write custom action class to implement logic. 
@@ -111,12 +114,12 @@ def run_hopalong(argv):
     parser.add_argument("-c", dest='c', type=float, nargs='+', action='append',
                         help="magnitude or range of c")
 
+
     args = parser.parse_args()
 
     # number of frames in animation
     frames = args.frames
-    cmap = args.cmap
-    
+   
     # default values provided here 
     amin, amax = get_range(args.a, (0.5, 0.5))
     bmin, bmax = get_range(args.b, (-0.6, -0.6))
@@ -129,7 +132,8 @@ def run_hopalong(argv):
     cc = np.linspace(cmin, cmax, frames)
     
     hopalong_orbit = Hopalong(aa, bb, cc, frames)
-    hopalong_orbit.set_cmap(cmap)
+    hopalong_orbit.set_cmap(args.cmap)
+    hopalong_orbit.set_axisbg(args.axisbg)
 
     # save the frames in the current directory
     for i in range(frames):
